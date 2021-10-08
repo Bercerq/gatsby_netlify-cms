@@ -1,0 +1,22 @@
+{
+  "name": "gymwebapp",
+  "version": "1.0.0",
+  "description": "gym web application",
+  "scripts": {
+    "start:back": "cd backend && npm run start:dev",
+    "start:front": "cd frontend && npm run start",
+    "app:dev": "cd backend && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bercerq/GymWebApp.git"
+  },
+  "author": "Illya Kohanchuk && Kirill Bercerq",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bercerq/GymWebApp/issues"
+  },
+  "homepage": "https://github.com/Bercerq/GymWebApp#readme",
+  "dependencies": {
+  }
+}

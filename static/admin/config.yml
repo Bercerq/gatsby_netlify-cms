@@ -9,136 +9,71 @@ site_url: https://cucumbercms.netlify.app
 media_folder: static/img
 public_folder: /img
 
-collections:
+collections: # A list of collections the CMS should be able to edit
+  - name: "page"
+    label: "Page"
+    folder: "content/_pages/page"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "My Custom Widget", name: "mywidgetname", widget: "mywidget" }
+
+  - name: "widget_docs" # Used in routes, ie.: /admin/collections/:slug/edit
+    label: "Widget Docs" # Used in the UI, ie.: "New Post"
+    folder: "website/content/docs/widgets" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields each document in this collection have
+      - { label: "Name", name: "title" }
+      - { label: "Label", name: "label" }
+      - { label: "Body", name: "body", widget: "markdown" }
   - name: "blog"
     label: "Blog"
-    folder: "content/blog"
-    create: true
-    delete: true
-    slug: "index"
-    media_folder: ""
-    public_folder: ""
-    path: "{{title}}/index"
-    editor:
-      preview: true
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Description", name: "description", widget: "string" }
-      - { label: "Body", name: "body", widget: "markdown" }
-  - name: "settings"
-    label: "Settings"
-    folder: "content/settings"
-    create: true
-    slug: "index"
-    media_folder: ""
-    public_folder: ""
-    path: "{{title}}/index"
-    editor:
-      preview: true
-    fields:
-      - { label: "Bollean", name: "draft", widget: "boolean", default: true }
-      - { label: "Code", name: "code", widget: "code" }
-      - { label: "Color", name: "color", widget: "color" }
-      - label: "Birthdate"
-        name: "birthdate"
-        widget: "date"
-        default: ""
-        format: "MMM Do YY"
-      - label: "Start time"
-        name: "start"
-        widget: "datetime"
-        default: ""
-        date_format: "DD.MM.YYYY" # e.g. 24.12.2021
-        time_format: "HH:mm" # e.g. 21:07
-        format: "LLL"
-        picker_utc: false
-      - label: "Manual PDF"
-        name: "manual_pdf"
-        widget: "file"
-        default: "/uploads/general-manual.pdf"
-        media_library:
-          config:
-            multiple: true
-      - { label: "Layout", name: "layout", widget: "hidden", default: "blog" }
-      - label: "Featured Image"
-        name: "thumbnail"
-        widget: "image"
-        choose_url: true
-        default: "/uploads/chocolate-dogecoin.jpg"
-        media_library:
-          config:
-            multiple: true
-      - label: "Testimonials"
-        name: "testimonials"
-        minimize_collapsed: true
-        widget: "list"
-        fields:
-          - {
-              label: Quote,
-              name: quote,
-              widget: string,
-              default: "Everything is awesome!",
-            }
-          - { label: Author, name: author, widget: string }
-      - { label: "Location", name: "location", widget: "map" }
-      - { label: "Blog post content", name: "body", widget: "markdown" }
-      - label: "Puppy Count"
-        name: "puppies"
-        widget: "number"
-        default: 2
-        value_type: "int"
-        min: 1
-        max: 101
-        step: 2
-      - label: "Profile"
-        name: "profile"
-        widget: "object"
-        summary: "{{fields.name}}: {{fields.birthdate}}"
-        fields:
-          - {
-              label: "Public",
-              name: "public",
-              widget: "boolean",
-              default: true,
-            }
-          - { label: "Name", name: "name", widget: "string" }
-          - label: "Birthdate"
-            name: "birthdate"
-            widget: "date"
-            default: ""
-            format: "MM/DD/YYYY"
-          - label: "Address"
-            name: "address"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "Street Address", name: "street", widget: "string" }
-              - { label: "City", name: "city", widget: "string" }
-              - { label: "Postal Code", name: "post-code", widget: "string" }
-      - label: "Tags"
-        name: "tags"
-        widget: "select"
-        multiple: true
-        min: 1
-        max: 3
-        options: ["Design", "UX", "Dev"]
-        default: ["Design"]
-      - { label: "Title", name: "title", widget: "string" }
-  - name: "products"
-    label: "Products"
-    folder: "_products"
-    slug: "{{slug}}"
+    label_singular: "Post"
+    folder: "website/content/blog"
     create: true
     fields:
-      - { label: "Price", name: "price", widget: "number" }
-      - { label: "SKU", name: "sku", widget: "string" }
-      - { label: "Image", name: "image", widget: "string" }
-      - { label: "Body", name: "body", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Title", name: "title", widget: "string", tagname: "h1" }
+      - { label: "Author", name: "author", widget: "string" }
       - {
-          label: "Layout",
-          name: "layout",
-          widget: "hidden",
-          default: "productdetails",
+          label: "Description (for blog list)",
+          name: "description",
+          widget: "text",
         }
+      - {
+          label: "Meta Description (defaults to Description)",
+          name: "meta_description",
+          widget: "text",
+          required: false,
+        }
+      - { label: "Twitter Image", name: "twitter_image", widget: "image" }
+      - { label: "Date", name: "date", widget: "date" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: updates
+    label: Updates
+    files:
+      - name: releases
+        label: Releases
+        file: website/data/updates.yml
+        fields:
+          - name: updates
+            label: Releases
+            widget: list
+            fields:
+              - { name: version, label: Version }
+              - { name: date, label: Date, widget: date }
+              - { name: description, label: Description }
+      - name: notifications
+        label: Notifications
+        file: website/data/notifications.yml
+        description: Site-top notifications - publish one at a time
+        fields:
+          - name: notifications
+            label: Notifications
+            widget: list
+            fields:
+              - { label: Title, name: title, widget: string, tagname: h1 }
+              - { label: Published, name: published, widget: boolean }
+              - { label: Loud, name: loud, widget: boolean }
+              - { label: Message, name: message, widget: text }
+              - { label: URL, name: url }
