@@ -8,8 +8,6 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^30.0.0",
-    "@ckeditor/ckeditor5-react": "^3.0.3",
     "gatsby": "^3.13.1",
     "gatsby-plugin-feed": "^3.13.0",
     "gatsby-plugin-google-analytics": "^3.13.0",

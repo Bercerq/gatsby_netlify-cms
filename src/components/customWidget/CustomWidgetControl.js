@@ -1,21 +1,20 @@
-import React, { PureComponent } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { ClassicEditor } from '@ckeditor/ckeditor5-build-classic';
+import React, { PureComponent } from "react"
 
 // Note that control component of a custom widget can't be
 // a functional component. It will not work for some reason.
 export class CustomWidgetControl extends PureComponent {
-  onChange = (event, editor) => {
-    const data = editor.getData();
-    this.props.onChange(data);
-  }
 
   render() {
     return (
-      <CKEditor
-        editor={ ClassicEditor }
-        onChange={this.onChange}
-      />
-    );
+      <div>
+        <div>
+          <input type="text" placeholder="my custom widget you"></input>
+        </div>
+        <div>
+          <input type="text" placeholder="my custom widget you"></input>
+        </div>
+        <button>submit</button>
+      </div>
+    )
   }
 }
